@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  background:black;
+  color:#b6ff00;
+  font-family:-apple-system, Arial;
+  margin:0;
+}
+.menu {
+  display:flex;
+  overflow-x:auto;
+  padding:12px;
+  border-bottom:1px solid #222;
+}
+.menu div {
+  margin-right:15px;
+  cursor:pointer;
+  font-weight:600;
+}
+.list {
+  padding:12px;
+}
+.item {
+  padding:16px 0;
+  border-bottom:1px solid #111;
+  line-height:1.8;
+  font-size:17px;
+}
+</style>
+</head>
+<body>
+
+<div class="menu">
+<div onclick="filter('all')">Todas</div>
+<div onclick="filter('1')">1-100</div>
+<div onclick="filter('2')">101-200</div>
+<div onclick="filter('3')">201-280</div>
+</div>
+
+<div class="list" id="list"></div>
+
+<script>
+
+const songs = [
+{id:1, artist:"Legião Urbana", title:"Tempo Perdido"},
+{id:2, artist:"Legião Urbana", title:"Pais e Filhos"},
+{id:3, artist:"Legião Urbana", title:"Será"},
+{id:4, artist:"Cazuza", title:"Exagerado"},
+{id:5, artist:"Cazuza", title:"Ideologia"},
+{id:6, artist:"Barão Vermelho", title:"Pro Dia Nascer Feliz"},
+{id:7, artist:"Paralamas", title:"Meu Erro"},
+{id:8, artist:"Paralamas", title:"Alagados"},
+{id:9, artist:"Titãs", title:"Epitáfio"},
+{id:10, artist:"Titãs", title:"Flores"},
+{id:35, artist:"Sandy & Junior", title:"A Lenda"},
+{id:36, artist:"Sandy & Junior", title:"Quando Você Passa"},
+{id:37, artist:"Sandy & Junior", title:"Desperdiçou"},
+{id:38, artist:"Sandy & Junior", title:"Imortal"}
+];
+
+function render(list){
+ document.getElementById('list').innerHTML = list.map(s => 
+ `<div class="item" onclick="go('${s.artist}','${s.title}')">
+ ${String(s.id).padStart(3,'0')} | ${s.artist} – ${s.title}
+ </div>`).join('');
+}
+
+function go(a,t){
+ window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(a+' '+t+' karaoke'));
+}
+
+function filter(type){
+ if(type=='1') render(songs.filter(s=>s.id<=100));
+ else if(type=='2') render(songs.filter(s=>s.id>100 && s.id<=200));
+ else if(type=='3') render(songs.filter(s=>s.id>200));
+ else render(songs);
+}
+
+render(songs);
+
+</script>
+
+</body>
+</html>
